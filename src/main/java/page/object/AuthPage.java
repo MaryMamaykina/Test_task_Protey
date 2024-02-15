@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import result.AuthorizationData;
 import result.ResultOfFillingInFields;
 
 import java.time.Duration;
@@ -37,7 +38,7 @@ public class AuthPage {
         switch (resultOfFillingInFields){
             case SUCCESS:
                 InputsPage inputsPage =new InputsPage(webDriver);
-                inputsPage.waitForPageToBeVisible();
+                inputsPage.waitForPageToBeClickable();
                 break;
             case WRONG_EMAIL_FORMAT_ERROR:
                 waitForElementToBeVisible(emailFormatErrorMessage);
@@ -46,6 +47,11 @@ public class AuthPage {
                 waitForElementToBeVisible(wrongEmailOrPasswordErrorMessage);
                 break;
         }
+    }
+
+    public void successfulAuthorization(){
+        openPage();
+        authorization(AuthorizationData.CORRECT_EMAIL_FOR_AUTH, AuthorizationData.CORRECT_PASSWORD_FOR_AUTH);
     }
     private void waitForElementToBeVisible(By locator){
         new WebDriverWait(webDriver, Duration.ofMillis(2000L))
