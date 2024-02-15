@@ -4,8 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import result.AuthorizationData;
-import result.ResultOfFillingInFields;
+import data.AuthorizationConsts;
+import data.AuthorisationResults;
 
 import java.time.Duration;
 
@@ -34,11 +34,11 @@ public class AuthPage {
         addTextIntoField(inputFieldPassword, password);
         clickField(authButton);
     }
-    public void checkingResult(ResultOfFillingInFields resultOfFillingInFields){
+    public void checkingResult(AuthorisationResults resultOfFillingInFields){
         switch (resultOfFillingInFields){
             case SUCCESS:
                 InputsPage inputsPage =new InputsPage(webDriver);
-                inputsPage.waitForPageToBeClickable();
+                inputsPage.waitForPageToLoad();
                 break;
             case WRONG_EMAIL_FORMAT_ERROR:
                 waitForElementToBeVisible(emailFormatErrorMessage);
@@ -51,7 +51,7 @@ public class AuthPage {
 
     public void successfulAuthorization(){
         openPage();
-        authorization(AuthorizationData.CORRECT_EMAIL_FOR_AUTH, AuthorizationData.CORRECT_PASSWORD_FOR_AUTH);
+        authorization(AuthorizationConsts.CORRECT_EMAIL_FOR_AUTH, AuthorizationConsts.CORRECT_PASSWORD_FOR_AUTH);
     }
     private void waitForElementToBeVisible(By locator){
         new WebDriverWait(webDriver, Duration.ofMillis(2000L))

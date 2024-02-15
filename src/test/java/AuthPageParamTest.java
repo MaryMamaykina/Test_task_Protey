@@ -7,8 +7,8 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import page.object.AuthPage;
-import result.AuthorizationData;
-import result.ResultOfFillingInFields;
+import data.AuthorizationConsts;
+import data.AuthorisationResults;
 
 @RunWith(Parameterized.class)
 public class AuthPageParamTest {
@@ -20,7 +20,7 @@ public class AuthPageParamTest {
     @Parameterized.Parameter(1)
     public String passwordForAuth;
     @Parameterized.Parameter(2)
-    public ResultOfFillingInFields result;
+    public AuthorisationResults result;
 
     @Before
     public void setup() {
@@ -32,23 +32,23 @@ public class AuthPageParamTest {
     @Parameterized.Parameters
     public static Object[][] data() {
         return new Object[][]{
-                {AuthorizationData.CORRECT_EMAIL_FOR_AUTH, AuthorizationData.CORRECT_PASSWORD_FOR_AUTH, ResultOfFillingInFields.SUCCESS},
-                {"", "", ResultOfFillingInFields.WRONG_EMAIL_FORMAT_ERROR},
-                {AuthorizationData.CORRECT_EMAIL_FOR_AUTH, "", ResultOfFillingInFields.WRONG_EMAIL_OR_PASSWORD_ERROR},
-                {"", AuthorizationData.CORRECT_PASSWORD_FOR_AUTH, ResultOfFillingInFields.WRONG_EMAIL_FORMAT_ERROR},
-                {"test@protei", AuthorizationData.CORRECT_PASSWORD_FOR_AUTH, ResultOfFillingInFields.WRONG_EMAIL_OR_PASSWORD_ERROR},
-                {AuthorizationData.CORRECT_EMAIL_FOR_AUTH, "tset", ResultOfFillingInFields.WRONG_EMAIL_OR_PASSWORD_ERROR},
-                {"testprotei.ru", AuthorizationData.CORRECT_PASSWORD_FOR_AUTH, ResultOfFillingInFields.WRONG_EMAIL_FORMAT_ERROR},
-                {AuthorizationData.CORRECT_EMAIL_FOR_AUTH, variableForCreatingLargeText.repeat(10000), ResultOfFillingInFields.WRONG_EMAIL_OR_PASSWORD_ERROR}
+                {AuthorizationConsts.CORRECT_EMAIL_FOR_AUTH, AuthorizationConsts.CORRECT_PASSWORD_FOR_AUTH, AuthorisationResults.SUCCESS},
+                {"", "", AuthorisationResults.WRONG_EMAIL_FORMAT_ERROR},
+                {AuthorizationConsts.CORRECT_EMAIL_FOR_AUTH, "", AuthorisationResults.WRONG_EMAIL_OR_PASSWORD_ERROR},
+                {"", AuthorizationConsts.CORRECT_PASSWORD_FOR_AUTH, AuthorisationResults.WRONG_EMAIL_FORMAT_ERROR},
+                {"test@protei", AuthorizationConsts.CORRECT_PASSWORD_FOR_AUTH, AuthorisationResults.WRONG_EMAIL_OR_PASSWORD_ERROR},
+                {AuthorizationConsts.CORRECT_EMAIL_FOR_AUTH, "tset", AuthorisationResults.WRONG_EMAIL_OR_PASSWORD_ERROR},
+                {"testprotei.ru", AuthorizationConsts.CORRECT_PASSWORD_FOR_AUTH, AuthorisationResults.WRONG_EMAIL_FORMAT_ERROR},
+                {AuthorizationConsts.CORRECT_EMAIL_FOR_AUTH, variableForCreatingLargeText.repeat(10000), AuthorisationResults.WRONG_EMAIL_OR_PASSWORD_ERROR}
         };
     }
 
     @Test
     public void checkDependenceResultFromEmailAndPassword(){
-        AuthPage authPage = new AuthPage(webDriver);
-        authPage.openPage();
-        authPage.authorization(emailForAuth, passwordForAuth);
-        authPage.checkingResult(result);
+        AuthPage objAuthPage = new AuthPage(webDriver);
+        objAuthPage.openPage();
+        objAuthPage.authorization(emailForAuth, passwordForAuth);
+        objAuthPage.checkingResult(result);
     }
 
     @After

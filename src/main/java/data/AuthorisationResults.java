@@ -1,6 +1,6 @@
-package result;
+package data;
 
-public enum ResultOfFillingInFields {
+public enum AuthorisationResults {
 
     SUCCESS,
     WRONG_EMAIL_FORMAT_ERROR,
